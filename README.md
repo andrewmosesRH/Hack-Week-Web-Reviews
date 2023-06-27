@@ -8,7 +8,7 @@ Before using this tool, ensure that you have the following prerequisites set up:
 
 - Node.js installed on your system.
 - An account with [Mailosaur](https://www.mailosaur.com/) and the API key.
-- [Lucius RH Instance]([https://lucius.ai/](https://github.com/rockethomes/hackweek-openai-chatgpt/tree/main)) and the API key.
+- [Lucius RH Instance]([https://lucius.ai/](https://github.com/rockethomes/hackweek-openai-chatgpt/tree/main) and the API key.
 - Access to a Slack workspace and a webhook URL for sending messages.
 
 ## Installation

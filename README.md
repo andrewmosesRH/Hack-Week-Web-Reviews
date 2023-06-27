@@ -2,6 +2,21 @@
 
 This tool is used to generate feedback summaries and potential action items based on user feedback. It retrieves user feedback from Mailosaur, analyzes it using the Lucius API, and sends a Slack message with the generated summary.
 
+Sample output:
+```New feedback incoming! :praise-the-sun:
+
+Summary:
+- Positive feedback submissions: 1
+- Negative feedback submissions: 0
+User feedback:
+- Site is loved by the user
+- Location page is sometimes slow
+Action items:
+- Analyze server response time for the location page
+- Optimize images and reduce file sizes on the location page
+- Implement a caching strategy for frequently accessed data on the location page
+```
+
 ## Prerequisites
 
 Before using this tool, ensure that you have the following prerequisites set up:

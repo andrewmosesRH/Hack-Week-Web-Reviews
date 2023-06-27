@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "axios": "^1.4.0",
+    "dotenv": "^16.3.1"
+  },
+  "scripts": {
+    "yeet": "node main.js"
+  },
+  "devDependencies": {
+    "mailosaur": "^8.6.1"
+  }
+}

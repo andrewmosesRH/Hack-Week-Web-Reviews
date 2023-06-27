@@ -5,11 +5,23 @@ const sendSlackMessage = require('./sendSlackMessage');
 async function main() {
   const mailosaurResponse = await requestMailosaur();
 
-  const luciusResponse = await requestLucius(mailosaurResponse);
+  const { contents, reviewsProcessed, reviewsRemaining } = mailosaurResponse;
 
-  const feedback = luciusResponse[0].message.content;
+  if (reviewsProcessed === 0) {
+    // Don't need to send requests for no reason
+    console.log('[STATUS]::: process ended early - no reviews processed');
+    return;
+  } else {
+    const luciusResponse = await requestLucius(contents);
 
-  sendSlackMessage(feedback);
+    const feedback = luciusResponse[0].message.content;
+
+    sendSlackMessage(
+      feedback,
+      String(reviewsProcessed),
+      String(reviewsRemaining)
+    );
+  }
 }
 
 main();

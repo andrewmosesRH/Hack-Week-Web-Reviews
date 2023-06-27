@@ -3,6 +3,7 @@ const MailosaurClient = require('mailosaur');
 const mailosaur = new MailosaurClient(process.env.MAILOSAUR_API_KEY);
 
 async function requestMailosaur() {
+  console.log('[STATUS]::: requestMailosaur is starting its task');
   const server = process.env.MAILOSAUR_SERVER;
   const criteria = {
     sentTo: process.env.MAILOSAUR_EMAIL,
@@ -14,7 +15,10 @@ async function requestMailosaur() {
   };
 
   let tokenCount = 0;
+  let reviewsProcessed = 0;
   const contents = [];
+
+  let index = 1;
 
   while (tokenCount <= 800) {
     try {
@@ -25,9 +29,14 @@ async function requestMailosaur() {
       if (tokens + tokenCount <= 800) {
         contents.push(text.body);
         tokenCount += tokens;
+        reviewsProcessed++;
 
         await mailosaur.messages.del(id);
+
+        console.log(`[STATUS]::: Reviews added for processing: ${index}`);
+        index++;
       } else {
+        console.log('[STATUS]::: Token threshold at max');
         break;
       }
     } catch (error) {
@@ -36,6 +45,7 @@ async function requestMailosaur() {
         .startsWith('Error: No matching messages');
 
       if (noMessages) {
+        console.log('[STATUS]::: No remaining messages');
         break;
       } else {
         console.log('Mailosaur Error:', {
@@ -47,9 +57,18 @@ async function requestMailosaur() {
     }
   }
 
+  const reviewsList = await mailosaur.messages.list(server);
+  const reviewsRemaining = reviewsList?.length ?? 0;
+
   if (contents.length === 0) contents.push('No submissions');
 
-  return contents;
+  console.log('[STATUS]::: requestMailousar completed its task');
+
+  return {
+    contents,
+    reviewsProcessed: reviewsProcessed,
+    reviewsRemaining: reviewsRemaining,
+  };
 }
 
 module.exports = requestMailosaur;

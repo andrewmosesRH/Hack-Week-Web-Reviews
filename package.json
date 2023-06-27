@@ -4,7 +4,7 @@
     "dotenv": "^16.3.1"
   },
   "scripts": {
-    "yeet": "node main.js"
+    "start": "node main.js"
   },
   "devDependencies": {
     "mailosaur": "^8.6.1"

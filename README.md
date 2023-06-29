@@ -43,7 +43,8 @@ Before using this tool, ensure that you have the following prerequisites set up:
    - `MAILOSAUR_EMAIL`: The email address to filter for feedback messages.
    - `LUCIUS_API_KEY`: Your Lucius API key.
    - `LUCIUS_ENDPOINT`: The Lucius API endpoint URL.
-   - `MAX_TOKENS`: The maximum number of tokens to generate in the Lucius API call.
+   - `MAX_TOKENS_INPUT`: The maximum number of tokens to generate in the Lucius API call.
+   - `MAX_TOKENS_OUTPUT`: The maximum number of tokens to generate for the Slack message.
    - `SLACK_URL`: The Slack webhook URL for sending the message.
    - `INITIAL_PROMPT`: The initial prompt for the Lucius API.
 

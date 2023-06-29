@@ -4,37 +4,38 @@ const mailosaur = new MailosaurClient(process.env.MAILOSAUR_API_KEY);
 
 async function requestMailosaur() {
   console.log('[STATUS]::: requestMailosaur is starting its task');
+
   const server = process.env.MAILOSAUR_SERVER;
-  const criteria = {
-    sentTo: process.env.MAILOSAUR_EMAIL,
-  };
-  const ONE_WEEK = 604800000;
-  const receivedAfter = new Date(Date.now() - ONE_WEEK);
-  const options = {
-    receivedAfter,
-  };
+  const sentTo = process.env.MAILOSAUR_EMAIL;
+  const sentFrom = process.env.SENDER;
+  const criteria = { sentTo, sentFrom };
+  const oneWeekMS = 604800000;
+  const receivedAfter = new Date(Date.now() - oneWeekMS);
+  const options = { receivedAfter };
 
   let tokenCount = 0;
   let reviewsProcessed = 0;
+  let index = 0;
+
   const contents = [];
+  const maxInput = process.env.MAX_TOKENS_INPUT;
 
-  let index = 1;
-
-  while (tokenCount <= 800) {
+  while (tokenCount <= maxInput) {
     try {
       const email = await mailosaur.messages.get(server, criteria, options);
       const { text, id } = email;
-      const tokens = text.body.length;
+      // Makeshift token counting since we don't have access to openai/tokenizer
+      const tokens = text.body.split(' ').length;
 
-      if (tokens + tokenCount <= 800) {
+      if (tokens + tokenCount <= maxInput) {
         contents.push(text.body);
         tokenCount += tokens;
         reviewsProcessed++;
 
         await mailosaur.messages.del(id);
+        index++;
 
         console.log(`[STATUS]::: Reviews added for processing: ${index}`);
-        index++;
       } else {
         console.log('[STATUS]::: Token threshold at max');
         break;
@@ -66,8 +67,8 @@ async function requestMailosaur() {
 
   return {
     contents,
-    reviewsProcessed: reviewsProcessed,
-    reviewsRemaining: reviewsRemaining,
+    reviewsProcessed,
+    reviewsRemaining,
   };
 }
 

@@ -2,7 +2,7 @@ const axios = require('axios');
 require('dotenv').config();
 
 async function requestLucius(reviews) {
-  console.log('[STATUS]::: requestLucius starting');
+  console.log(':::[STATUS]::: requestLucius starting\n');
 
   const key = process.env.LUCIUS_API_KEY;
   const endpoint = process.env.LUCIUS_ENDPOINT;
@@ -24,11 +24,11 @@ async function requestLucius(reviews) {
   try {
     const response = await axios.post(endpoint, body, config);
 
-    console.log('[STATUS]::: requestLucius completed its task');
+    console.log(':::[STATUS]::: requestLucius completed its task\n');
 
     return response.data.choices;
   } catch (error) {
-    console.error('[STATUS]::: Error in requestLucius:', error);
+    console.error(':::[STATUS]::: Error in requestLucius:\n', error);
   }
 }
 

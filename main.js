@@ -10,7 +10,7 @@ async function main() {
 
   if (reviewsProcessed === 0) {
     // Don't need to send requests for no reason
-    console.log('[STATUS]::: process ended early - no reviews processed');
+    console.log(':::[STATUS]::: process ended early - no reviews processed\n');
     return;
   }
 
@@ -29,6 +29,6 @@ async function main() {
   }
 }
 
-cron.schedule('0 9 * * *', main);
+// cron.schedule('0 9 * * *', main);
 
-// main();
+main();
